@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A-Level ภาษาจีน 68 | ข้อ 1–10</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+Thai:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #C0392B;
+    --dark-red: #922B21;
+    --light-red: #FADBD8;
+    --gold: #D4AC0D;
+    --dark: #1A252F;
+    --mid: #5D6D7E;
+    --light: #F8F9FA;
+    --white: #FFFFFF;
+    --correct: #1E8449;
+    --correct-bg: #D5F5E3;
+    --wrong: #C0392B;
+    --wrong-bg: #FADBD8;
+  }
+
+  body {
+    font-family: 'Noto Sans Thai', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* ── BACKGROUND TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(192,57,43,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(212,172,13,0.1) 0%, transparent 55%),
+      linear-gradient(160deg, #1A252F 0%, #17202A 60%, #1C2833 100%);
+    z-index: 0;
+  }
+
+  /* ── SLIDE WRAPPER ── */
+  #app {
+    position: relative;
+    z-index: 1;
+    width: min(900px, 96vw);
+    min-height: 560px;
+  }
+
+  /* ── SLIDE ── */
+  .slide {
+    display: none;
+    flex-direction: column;
+    animation: slideIn 0.45s cubic-bezier(.23,1,.32,1) both;
+  }
+  .slide.active { display: flex; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(22px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ══════════════════════════════
+     TITLE SLIDE
+  ══════════════════════════════ */
+  #slide-title {
+    align-items: center;
+    justify-content: center;
+    min-height: 560px;
+    text-align: center;
+    gap: 0;
+  }
+
+  .title-badge {
+    background: var(--red);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    padding: 6px 18px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .title-chinese {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+  }
+
+  .title-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 6px;
+    margin-bottom: 32px;
+  }
+
+  .title-divider {
+    width: 80px; height: 3px;
+    background: var(--red);
+    margin: 0 auto 32px;
+  }
+
+  .title-info {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.9;
+  }
+
+  .title-info strong { color: rgba(255,255,255,0.8); }
+
+  .btn-start {
+    margin-top: 36px;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 14px 52px;
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 6px 24px rgba(192,57,43,0.45);
+  }
+  .btn-start:hover { background: var(--dark-red); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(192,57,43,0.55); }
+  .btn-start:active { transform: translateY(0); }
+
+  /* ══════════════════════════════
+     PROGRESS BAR
+  ══════════════════════════════ */
+  .progress-wrap {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .progress-bar {
+    flex: 1; height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    white-space: nowrap;
+  }
+
+  /* ══════════════════════════════
+     QUESTION CARD
+  ══════════════════════════════ */
+  .q-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 28px 30px 22px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(4px);
+  }
+
+  .q-num-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .q-num {
+    background: var(--red);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .q-topic {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.05em;
+  }
+
+  .q-pinyin {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.42);
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  .q-chinese {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.15rem, 3vw, 1.55rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.55;
+  }
+
+  .blank {
+    display: inline-block;
+    min-width: 70px;
+    border-bottom: 2.5px solid var(--gold);
+    color: var(--gold);
+    text-align: center;
+    padding: 0 6px;
+    font-style: normal;
+  }
+
+  /* ══════════════════════════════
+     CHOICES
+  ══════════════════════════════ */
+  .choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .choice-btn {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    text-align: left;
+    font-family: 'Noto Sans Thai', sans-serif;
+  }
+  .choice-btn:hover:not(:disabled) {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.09);
+    transform: translateY(-1px);
+  }
+  .choice-btn:disabled { cursor: default; transform: none; }
+
+  .choice-num {
+    min-width: 44px; height: 100%;
+    background: rgba(192,57,43,0.2);
+    color: var(--light-red);
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    padding: 14px 0;
+    border-right: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .choice-text {
+    padding: 13px 16px;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+  }
+  .choice-chinese { font-family: 'Noto Serif SC', serif; font-weight: 700; }
+  .choice-pinyin  { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  /* States */
+  .choice-btn.correct {
+    border-color: var(--correct);
+    background: rgba(30,132,73,0.18);
+  }
+  .choice-btn.correct .choice-num {
+    background: var(--correct);
+    color: var(--white);
+  }
+  .choice-btn.wrong {
+    border-color: var(--wrong);
+    background: rgba(192,57,43,0.15);
+    opacity: 0.7;
+  }
+  .choice-btn.wrong .choice-num {
+    background: var(--wrong);
+    color: var(--white);
+  }
+  .choice-btn.reveal-correct {
+    border-color: var(--correct);
+    background: rgba(30,132,73,0.12);
+  }
+  .choice-btn.reveal-correct .choice-num {
+    background: var(--correct);
+    color: var(--white);
+  }
+
+  /* ══════════════════════════════
+     EXPLANATION BOX
+  ══════════════════════════════ */
+  .explanation {
+    background: rgba(212,172,13,0.08);
+    border: 1px solid rgba(212,172,13,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.65;
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s, transform 0.35s;
+    pointer-events: none;
+  }
+  .explanation.visible {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+  }
+  .explanation strong { color: var(--gold); }
+
+  /* ══════════════════════════════
+     NAV BUTTONS
+  ══════════════════════════════ */
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .btn-nav {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+    padding: 10px 22px;
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-size: 0.88rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-nav:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+  .btn-nav:disabled { opacity: 0.25; cursor: default; }
+
+  .btn-next {
+    background: var(--red);
+    border: none;
+    color: var(--white);
+    padding: 11px 28px;
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(192,57,43,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, background 0.2s, transform 0.15s;
+  }
+  .btn-next.visible { opacity: 1; pointer-events: auto; }
+  .btn-next:hover { background: var(--dark-red); transform: translateY(-1px); }
+
+  .score-chip {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .score-chip span { color: var(--gold); font-weight: 700; }
+
+  /* ══════════════════════════════
+     RESULT SLIDE
+  ══════════════════════════════ */
+  #slide-result {
+    align-items: center;
+    justify-content: center;
+    min-height: 560px;
+    text-align: center;
+    gap: 0;
+  }
+
+  .result-ring {
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: conic-gradient(var(--gold) 0%, var(--red) 100%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 0 40px rgba(212,172,13,0.3);
+  }
+  .result-ring-inner {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: var(--dark);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .result-score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .result-score-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+
+  .result-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .result-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 28px;
+  }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 480px;
+  }
+  .result-item {
+    border-radius: 6px;
+    padding: 8px 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .result-item.ok { background: rgba(30,132,73,0.2); color: #58D68D; border: 1px solid rgba(30,132,73,0.3); }
+  .result-item.no { background: rgba(192,57,43,0.2); color: #EC7063; border: 1px solid rgba(192,57,43,0.3); }
+  .result-item .q-label { font-size: 0.65rem; opacity: 0.6; margin-bottom: 2px; }
+
+  .btn-restart {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 12px 40px;
+    font-family: 'Noto Sans Thai', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(192,57,43,0.45);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-restart:hover { background: var(--dark-red); transform: translateY(-1px); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 540px) {
+    .choices-grid { grid-template-columns: 1fr; }
+    .q-chinese { font-size: 1.1rem; }
+    .result-grid { grid-template-columns: repeat(5,1fr); }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- TITLE SLIDE -->
+  <div class="slide active" id="slide-title">
+    <div class="title-badge">A-Level 68 · รหัสวิชา 87</div>
+    <div class="title-chinese">汉语测验</div>
+    <div class="title-sub">Hànyǔ Cèyàn — แบบทดสอบภาษาจีน</div>
+    <div class="title-divider"></div>
+    <div class="title-info">
+      <strong>ข้อ 1–10</strong> เลือกคำตอบที่ถูกต้องที่สุด<br>
+      สอบวันจันทร์ที่ 10 มีนาคม พ.ศ. 2568 · เวลา 13.30 – 15.00 น.
+    </div>
+    <button class="btn-start" onclick="startQuiz()">เริ่มทำข้อสอบ →</button>
+  </div>
+
+  <!-- QUESTION SLIDE (reused) -->
+  <div class="slide" id="slide-q">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">1 / 10</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-num-row">
+        <div class="q-num" id="q-num">ข้อ 1</div>
+        <div class="q-topic" id="q-topic">เลือกคำตอบที่ถูกต้อง</div>
+      </div>
+      <div class="q-pinyin" id="q-pinyin"></div>
+      <div class="q-chinese" id="q-chinese"></div>
+    </div>
+
+    <div class="choices-grid" id="choices-grid"></div>
+
+    <div class="explanation" id="explanation"></div>
+
+    <div class="nav-row">
+      <button class="btn-nav" id="btn-prev" onclick="prevQ()">← ย้อนกลับ</button>
+      <div class="score-chip">คะแนน: <span id="score-display">0</span>/10</div>
+      <button class="btn-next" id="btn-next" onclick="nextQ()">ถัดไป →</button>
+    </div>
+  </div>
+
+  <!-- RESULT SLIDE -->
+  <div class="slide" id="slide-result">
+    <div class="result-ring">
+      <div class="result-ring-inner">
+        <div class="result-score-num" id="result-num">0</div>
+        <div class="result-score-label">คะแนน</div>
+      </div>
+    </div>
+    <div class="result-title" id="result-title">ผลการทำข้อสอบ</div>
+    <div class="result-sub" id="result-sub"></div>
+    <div class="result-grid" id="result-grid"></div>
+    <button class="btn-restart" onclick="restart()">ทำใหม่อีกครั้ง</button>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    num: 1,
+    topic: "คำเชื่อม / คำวิเศษณ์",
+    pinyin: "Wǒ ______ kànjiàn tā cóng nàlǐ jīngguò, tā zěnme néng fǒurèn ne?",
+    chinese: "我<span class='blank'>______</span>看见他从那里经过，他怎么能否认呢？",
+    choices: [
+      { zh: "往往", py: "wǎngwǎng", th: "มักจะ" },
+      { zh: "偏偏", py: "piānpian", th: "ดันทุรัง / กลับ" },
+      { zh: "渐渐", py: "jiànjiàn", th: "ค่อยๆ" },
+      { zh: "明明", py: "míngmíng", th: "ชัดๆ / เห็นๆ อยู่ว่า" }
+    ],
+    answer: 3,
+    explain: "<strong>明明</strong> (míngmíng) ใช้เน้นว่า <strong>'เห็นๆ อยู่ว่า / ชัดเจนว่า...'</strong> เหมาะกับประโยคที่มีการตั้งคำถามย้อนกลับ (怎么能...呢？)"
+  },
+  {
+    num: 2,
+    topic: "คำบอกเวลา",
+    pinyin: "Tā chī zhème duō, yòu bù duànliàn shēntǐ, _____ de biàn pàng.",
+    chinese: "他吃这么多，又不锻炼身体，<span class='blank'>_____</span>的变胖。",
+    choices: [
+      { zh: "前后", py: "qiánhòu", th: "ก่อนหลัง / ประมาณ" },
+      { zh: "早晚", py: "zǎowǎn", th: "สักวันต้องเกิดขึ้น" },
+      { zh: "左右", py: "zuǒyòu", th: "ซ้ายขวา / ราวๆ" },
+      { zh: "先后", py: "xiānhòu", th: "ก่อนและหลัง" }
+    ],
+    answer: 1,
+    explain: "<strong>早晚</strong> (zǎowǎn) หมายถึง <strong>'สักวันหนึ่งต้องเกิดขึ้นแน่ๆ'</strong> ใช้กับผลที่หลีกเลี่ยงไม่ได้จากพฤติกรรมที่ทำ"
+  },
+  {
+    num: 3,
+    topic: "คำศัพท์ / คำขยาย",
+    pinyin: "Tā jiùshì tài _____ le, yàobùrán bú huì shū gěi nǐ.",
+    chinese: "他就是太<span class='blank'>_____</span>了，要不然不会输给你。",
+    choices: [
+      { zh: "大小", py: "dàxiǎo", th: "ขนาด" },
+      { zh: "大概", py: "dàgài", th: "ประมาณ / คงจะ" },
+      { zh: "大意", py: "dàyì", th: "ประมาท / ไม่ระวัง" },
+      { zh: "大体", py: "dàtǐ", th: "โดยรวม / ส่วนใหญ่" }
+    ],
+    answer: 2,
+    explain: "<strong>大意</strong> (dàyì) แปลว่า <strong>ประมาท / ไม่ระวัง</strong> | ระวัง: 大意 อ่าน dàyì = ประมาท | dàyi = ใจความสำคัญ เป็นคนละความหมาย"
+  },
+  {
+    num: 4,
+    topic: "คำกริยาวิเศษณ์",
+    pinyin: "Bèizhe hěn duō dōngxi, tāmen _____ de xiàng qián zǒuzhe.",
+    chinese: "背着很多东西，他们<span class='blank'>_____</span>的向前走着。",
+    choices: [
+      { zh: "吃力", py: "chīlì", th: "ยากลำบาก / หนักแรง" },
+      { zh: "给力", py: "gěilì", th: "เจ๋ง / มีพลัง (สแลง)" },
+      { zh: "出力", py: "chūlì", th: "ออกแรง" },
+      { zh: "动力", py: "dònglì", th: "แรงขับเคลื่อน / แรงบันดาลใจ" }
+    ],
+    answer: 0,
+    explain: "<strong>吃力</strong> (chīlì) หมายถึง ทำด้วยความยากลำบาก เหนื่อยหนัก เหมาะกับสถานการณ์แบกของหนักเดินหน้าต่อไป"
+  },
+  {
+    num: 5,
+    topic: "คำบ่งบอกระดับ",
+    pinyin: "Zhè jiàn shì nǐ ______ bù néng gěi biéren shuō.",
+    chinese: "这件事你<span class='blank'>______</span>不能给别人说。",
+    choices: [
+      { zh: "到底", py: "dàodǐ", th: "ในที่สุด / กันแน่" },
+      { zh: "究竟", py: "jiūjìng", th: "กันแน่ / อย่างที่แท้จริง" },
+      { zh: "千万", py: "qiānwàn", th: "ห้ามเด็ดขาด / อย่าได้..." },
+      { zh: "万一", py: "wànyī", th: "ถ้าเกิดกรณีเลวร้าย" }
+    ],
+    answer: 2,
+    explain: "<strong>千万</strong> (qiānwàn) ใช้เน้นคำสั่งหรือข้อห้ามอย่างจริงจัง: <strong>'อย่าได้... / ห้ามเด็ดขาด'</strong> | 万一 = สมมติว่าเกิดเหตุไม่คาดคิด"
+  },
+  {
+    num: 6,
+    topic: "คำศัพท์ใกล้เคียง",
+    pinyin: "Lǎoshī jīngyàn ______, wǒmen háishi tīng tīng tā de yìjiàn ba.",
+    chinese: "老师经验<span class='blank'>______</span>，我们还是听听他的意见吧。",
+    choices: [
+      { zh: "富裕", py: "fùyù", th: "ร่ำรวย (ทรัพย์สิน)" },
+      { zh: "富有", py: "fùyǒu", th: "มั่งคั่ง / อุดม" },
+      { zh: "丰收", py: "fēngshōu", th: "ได้ผลผลิตดี (เกษตร)" },
+      { zh: "丰富", py: "fēngfù", th: "อุดมสมบูรณ์ (ความรู้/ประสบการณ์)" }
+    ],
+    answer: 3,
+    explain: "<strong>丰富</strong> (fēngfù) ใช้กับ ความรู้ / ประสบการณ์ | <strong>富裕</strong> = ร่ำรวย (ทรัพย์สิน) | <strong>丰收</strong> = ผลผลิตดีงาม (ใช้กับเกษตรกรรม)"
+  },
+  {
+    num: 7,
+    topic: "คำวิเศษณ์บอกเวลา",
+    pinyin: "Zuìjìn máng jí le, _____ méi kòng er qù kàn nǐmen.",
+    chinese: "最近忙极了，<span class='blank'>_____</span>没空儿去看你们。",
+    choices: [
+      { zh: "一直", py: "yīzhí", th: "ตลอดมา / เรื่อยๆ" },
+      { zh: "一起", py: "yīqǐ", th: "ด้วยกัน" },
+      { zh: "一块儿", py: "yīkuàir", th: "ด้วยกัน (พูด)" },
+      { zh: "一共", py: "yīgòng", th: "รวมทั้งหมด" }
+    ],
+    answer: 0,
+    explain: "<strong>一直</strong> (yīzhí) แสดงความต่อเนื่องของสภาวะตลอดช่วงเวลา | 一起/一块儿 = ด้วยกัน | 一共 = รวมทั้งหมด"
+  },
+  {
+    num: 8,
+    topic: "คำเชื่อม / คำถาม",
+    pinyin: "Xiànzài zhège wèntí yào ______ jiějué, wǒmen hái méi xiǎng hǎo.",
+    chinese: "现在这个问题要<span class='blank'>______</span>解决，我们还没想好。",
+    choices: [
+      { zh: "如果", py: "rúguǒ", th: "ถ้าหาก" },
+      { zh: "如何", py: "rúhé", th: "อย่างไร / วิธีใด" },
+      { zh: "比如", py: "bǐrú", th: "ยกตัวอย่างเช่น" },
+      { zh: "例如", py: "lìrú", th: "ตัวอย่างเช่น" }
+    ],
+    answer: 1,
+    explain: "<strong>如何</strong> (rúhé) = อย่างไร / วิธีใด | 如果 = ถ้าหาก | 比如/例如 = ยกตัวอย่างเช่น"
+  },
+  {
+    num: 9,
+    topic: "สำนวน / 成语",
+    pinyin: "Tā ______ dǎtīng biéren de xiāoxi, rán hòu sìchù chuánbō.",
+    chinese: "他<span class='blank'>______</span>打听别人的消息，然后四处传播。",
+    choices: [
+      { zh: "三长两短", py: "sān cháng liǎng duǎn", th: "เกิดเรื่องร้าย / อุบัติเหตุ" },
+      { zh: "七上八下", py: "qī shàng bā xià", th: "ใจหวิว / กังวล" },
+      { zh: "千方百计", py: "qiān fāng bǎi jì", th: "ใช้ทุกวิธีทุกกลอุบาย" },
+      { zh: "千言万语", py: "qiān yán wàn yǔ", th: "พูดมากมายหลายคำ" }
+    ],
+    answer: 2,
+    explain: "<strong>千方百计</strong> (qiānfāngbǎijì) = พยายามทุกวิถีทาง | โจทย์พิมพ์ 千万百计 แต่สำนวนที่ถูกคือ <strong>千方百计</strong>"
+  },
+  {
+    num: 10,
+    topic: "ความหมายคำขีดเส้นใต้",
+    pinyin: "Jiàqī qījiān, bówùguǎn ménpiào yīlǜ bànjià yōuhuì.",
+    chinese: "假期期间，博物馆门票<span style='text-decoration:underline;color:var(--gold)'>一律</span>半价优惠。",
+    choices: [
+      { zh: "全部", py: "quánbù", th: "ทั้งหมด / ทุกอย่าง" },
+      { zh: "必须", py: "bìxū", th: "ต้อง / จำเป็น" },
+      { zh: "提供", py: "tígōng", th: "จัดหาให้ / มอบให้" },
+      { zh: "打折", py: "dǎzhé", th: "ลดราคา" }
+    ],
+    answer: 0,
+    explain: "<strong>一律</strong> (yīlǜ) = โดยไม่มีข้อยกเว้น / ทั้งหมดเหมือนกัน มีความหมายตรงกับ <strong>全部</strong> (ทั้งหมด) มากที่สุด"
+  }
+];
+
+let current = 0;
+let score = 0;
+let userAnswers = new Array(10).fill(-1);
+let answered = new Array(10).fill(false);
+
+function showSlide(id) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+}
+
+function startQuiz() {
+  current = 0;
+  score = 0;
+  userAnswers = new Array(10).fill(-1);
+  answered = new Array(10).fill(false);
+  showSlide('slide-q');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  // Progress
+  document.getElementById('progress-fill').style.width = `${((current+1)/10)*100}%`;
+  document.getElementById('progress-label').textContent = `${current+1} / 10`;
+  document.getElementById('score-display').textContent = score;
+
+  // Header
+  document.getElementById('q-num').textContent = `ข้อ ${q.num}`;
+  document.getElementById('q-topic').textContent = q.topic;
+  document.getElementById('q-pinyin').textContent = q.pinyin;
+  document.getElementById('q-chinese').innerHTML = q.chinese;
+
+  // Choices
+  const grid = document.getElementById('choices-grid');
+  grid.innerHTML = '';
+  q.choices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = `
+      <div class="choice-num">${i+1}</div>
+      <div class="choice-text">
+        <div class="choice-chinese">${c.zh}</div>
+        <div class="choice-pinyin">${c.py} · ${c.th}</div>
+      </div>`;
+    btn.onclick = () => selectAnswer(i);
+
+    // Restore state if revisiting
+    if (answered[current]) {
+      btn.disabled = true;
+      if (i === q.answer) btn.classList.add('correct');
+      else if (i === userAnswers[current]) btn.classList.add('wrong');
+    }
+    grid.appendChild(btn);
+  });
+
+  // Explanation
+  const exp = document.getElementById('explanation');
+  exp.innerHTML = q.explain;
+  exp.classList.toggle('visible', answered[current]);
+
+  // Buttons
+  document.getElementById('btn-prev').disabled = current === 0;
+  const btnNext = document.getElementById('btn-next');
+  btnNext.textContent = current === 9 ? 'ดูผลคะแนน ✓' : 'ถัดไป →';
+  btnNext.classList.toggle('visible', answered[current]);
+}
+
+function selectAnswer(idx) {
+  if (answered[current]) return;
+  const q = QUESTIONS[current];
+  answered[current] = true;
+  userAnswers[current] = idx;
+  if (idx === q.answer) score++;
+
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.answer) btn.classList.add(idx === q.answer ? 'correct' : 'reveal-correct');
+    else if (i === idx) btn.classList.add('wrong');
+  });
+
+  document.getElementById('explanation').classList.add('visible');
+  document.getElementById('btn-next').classList.add('visible');
+  document.getElementById('score-display').textContent = score;
+}
+
+function nextQ() {
+  if (current === 9) { showResult(); return; }
+  current++;
+  renderQuestion();
+}
+
+function prevQ() {
+  if (current === 0) return;
+  current--;
+  renderQuestion();
+}
+
+function showResult() {
+  showSlide('slide-result');
+  document.getElementById('result-num').textContent = score;
+
+  const msgs = ['ต้องฝึกเพิ่มอีกนะคะ 📚', 'พยายามต่อไปนะ! 💪', 'ดีมากเลย! 🌟', 'เยี่ยมมาก! 🏆', 'สมบูรณ์แบบ! 完美！ 🎉'];
+  const idx = score <= 3 ? 0 : score <= 5 ? 1 : score <= 7 ? 2 : score <= 9 ? 3 : 4;
+  document.getElementById('result-title').textContent = msgs[idx];
+  document.getElementById('result-sub').textContent = `ตอบถูก ${score} จาก 10 ข้อ · คิดเป็น ${score*10}%`;
+
+  // Grid
+  const grid = document.getElementById('result-grid');
+  grid.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const correct = userAnswers[i] === q.answer;
+    const el = document.createElement('div');
+    el.className = `result-item ${correct ? 'ok' : 'no'}`;
+    el.innerHTML = `<div class="q-label">ข้อ ${q.num}</div>${correct ? '✓' : '✗'}`;
+    grid.appendChild(el);
+  });
+}
+
+function restart() {
+  startQuiz();
+}
+</script>
+</body>
+</html>
